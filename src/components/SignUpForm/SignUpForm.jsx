@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { UserContext } from '../../contexts/UserContext';
+import { useContext } from "react";
 
 const SignUpForm = (props) => {
+    const { setUser } = useContext(UserContext);
+
+
     const { signUp } = props;
     const navigate = useNavigate();
     const [message, setMessage] = useState('');
@@ -22,6 +27,7 @@ const SignUpForm = (props) => {
         evt.preventDefault();
         try {
             const newUser = await signUp(formData);
+            setUser(newUser);
         }
         catch (err) { console.log(err.message) }
     };
