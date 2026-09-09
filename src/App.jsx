@@ -1,18 +1,24 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import './App.css'
 import NavBar from './components/NavBar/NavBar'
 import { Route, Routes } from 'react-router'
 import SignUpForm from './components/SignUpForm/SignUpForm'
 import { signUp } from './services/authService';
+import SignInForm from './components/SignInForm/SignInForm'
+import Dashboard from './components/Dashboard/Dashboard'
+import Landing from './components/Landing/Landing'
+import { UserContext } from './contexts/UserContext'
 
 
 function App() {
-
+  const { user } = useContext(UserContext);
   return (
     <>
       <NavBar />
       <Routes>
-        <Route path='/sign-up' element={<SignUpForm signUp={signUp} />} />
+        <Route path='/' element={user ? <Dashboard /> : <Landing />} />
+        <Route path="/sign-in" element={<SignInForm />} />
+        <Route path='/sign-up' element={<SignUpForm />} />
       </Routes>
     </>
   )
